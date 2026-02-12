@@ -3,22 +3,25 @@
 # =========================================================
 # LogiDB Health Check
 # Email sent if ANY threshold is breached
+# Owner: a9w@qad.com
+# Version: 1.0
+# Update Date:02/03/2026
 # =========================================================
 
 # -------- CONFIG --------
 H2_JAR="/qond/apps/mfgpro/servers/logi-platform-services/default/platform/connection/drivers/h2-1.4.197.jar"
 
-DB_URL="jdbc:h2:tcp://sfr0bc9xdb01:19193/LogiDB"
+DB_URL="jdbc:h2:tcp://sfr0bc9xdb02:19193/LogiDB"
 DB_USER="sa"
 DB_PASS='zy*mur$gy22'
 
-TOKEN_THRESHOLD=600
+TOKEN_THRESHOLD=50000
 
 DB_FILE="/qond/apps/mfgpro/servers/logi-platform-services/default/platform/db/LogiDB.mv.db"
-FILE_SIZE_THRESHOLD=$((30 * 1024 * 1024))   # 100 MB
+FILE_SIZE_THRESHOLD=$((100 * 1024 * 1024))   # 100 MB
 
-EMAIL_TO="a9w@qad.com"
-EMAIL_SUBJECT="DEVL-ALERT: LogiDB Health Threshold Breached:Sage Automotive Interiors "
+EMAIL_TO="pdl_gtcs_monitors@qad.com"
+EMAIL_SUBJECT="BASE-ALERT: LogiDB Health Threshold Breached:Sage Automotive Interiors "
 # ------------------------
 
 ALERT_MSG=""
@@ -60,6 +63,7 @@ if [[ -n "$(echo "$ALERT_MSG" | tr -d '\n ')" ]]; then
     echo
     echo "This alert indicates abnormal growth detected in the LogiDB database,"
     echo "which may impact WebUI Application performance and couse WebUI down situation."
+	echo "Please create a ticket for support with the attached details to work and fix this issue."
     echo
     echo "Triggered Conditions"
     echo "-------------------"
@@ -83,4 +87,5 @@ if [[ -n "$(echo "$ALERT_MSG" | tr -d '\n ')" ]]; then
   } | mail -s "$EMAIL_SUBJECT" "$EMAIL_TO"
 fi
 exit 0
+
 
